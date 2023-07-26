@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -14,35 +15,45 @@ class ListViewItem extends StatelessWidget {
   final String imageUrl;
   final String textName;
   final String releaseDate;
-  final double vote;
+  final String vote;
   final String descreption;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.black26)),
-      child: Container(
-        // color: Colors.grey,
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * .2,
+    return SizedBox(
+      height: 125,
+      child: Card(
+        shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black26)),
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image(
-                    image: AssetImage(imageUrl),
-                  )),
-            ),
+                  child: AspectRatio(
+                    aspectRatio: 2.5 / 4,
+                    child: CachedNetworkImage(
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )),
             SizedBox(
               width: 6,
             ),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(textName),
+                padding: const EdgeInsets.only(top: 15),
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width * .7,
+                    child: Text(
+                      textName,
+                      overflow: TextOverflow.ellipsis,
+                      style: Styles.textStyle16.copyWith(fontSize: 13,fontWeight:FontWeight.bold) ,
+                    )),
               ),
               SizedBox(
                 height: 10,
@@ -54,7 +65,7 @@ class ListViewItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(3),
                       color: Colors.redAccent,
                     ),
-                    width: 50,
+                    width: 100,
                     height: 20,
                     child: Center(
                       child: Text(
@@ -78,17 +89,20 @@ class ListViewItem extends StatelessWidget {
                   ),
                   Text(
                     '$vote',
-                    style: Styles.textStyle16,
+                    style: Styles.textStyle14,
                   ),
                 ],
               ),
               SizedBox(height: 13),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * .7,
-                child: Text(
-                  descreption,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * .7,
+                  child: Text(
+                    descreption,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
                 ),
               ),
             ])

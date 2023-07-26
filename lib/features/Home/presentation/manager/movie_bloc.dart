@@ -11,13 +11,13 @@ part 'movie_state.dart';
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieBloc(this.homeRepo) : super(MovieInitial()) {
-      on<LoadNowPlayingMovies>(loadPlayingMovies);
-      on<LoadPopularMovies>(loadPopularMovies);
-      on<LoadTopRatedMovies>(loadTopRatedMovies);
+      on<LoadNowPlayingMovies>(_loadPlayingMovies);
+      on<LoadPopularMovies>(_loadPopularMovies);
+      on<LoadTopRatedMovies>(_loadTopRatedMovies);
   }
   final HomeRepo homeRepo;
 
-  Future<void> loadPlayingMovies (
+  Future<void> _loadPlayingMovies (
       LoadNowPlayingMovies event,
       Emitter<MovieState> emit,
       )async {
@@ -30,7 +30,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
        emit(NowPlayingMovieSuccess(movies));
       });
   }
-  Future<void> loadPopularMovies (
+  Future<void> _loadPopularMovies (
       LoadPopularMovies event,
       Emitter<MovieState> emit,
       )async {
@@ -44,7 +44,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     });
   }
 
-  Future<void>loadTopRatedMovies (
+  Future<void>_loadTopRatedMovies (
       LoadTopRatedMovies event,
       Emitter<MovieState> emit,
       )async {
