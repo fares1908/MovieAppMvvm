@@ -17,10 +17,7 @@ class HomeViewBody extends StatefulWidget {
 }
 
 class _HomeViewBodyState extends State<HomeViewBody> {
-  @override
-  void initState() {
-  BlocProvider.of<MovieBloc>(context).loadPopularMovies(LoadPopularMovies(),)
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

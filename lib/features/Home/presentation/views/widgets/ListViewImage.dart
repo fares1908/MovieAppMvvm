@@ -16,7 +16,7 @@ class ListViewItemImage extends StatelessWidget {
           child: CachedNetworkImage(
               imageUrl: imageUrl,
               fit: BoxFit.fill,
-              // errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
               progressIndicatorBuilder: (context, url, progress) => const Center(child: CircularProgressIndicator())
           )
       ),
