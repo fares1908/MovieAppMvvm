@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/assetsdata.dart';
+import '../../../../../core/utils/widget/CustomErrorWidget.dart';
 import '../../manager/movie_bloc.dart';
 
 class NowPlayingItem extends StatelessWidget {
@@ -9,11 +11,12 @@ class NowPlayingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieBloc,MovieState>(
-
-      builder: (context, state) {
-
-
+    return BlocBuilder<MovieBloc, MovieState>(
+      builder: (
+        context,
+        state,
+      ) {
+        if (state is NowPlayingMovieSuccess) {
           return Stack(
             alignment: Alignment.bottomCenter,
             children: [
@@ -24,22 +27,55 @@ class NowPlayingItem extends StatelessWidget {
                     height: 300,
                     width: double.infinity,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image(
-                        fit: BoxFit.cover,
-                        image: AssetImage(AssetData.test),
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(12),
+                        child: ListView.builder(
+                          itemCount: 1,
+
+                          itemBuilder: (context, index) {
+                            return CachedNetworkImage(
+                              height: 300,
+                              width: double.infinity,
+                              imageUrl: state.movies[index].backdropPath,
+                              errorWidget: (context, url, error) =>   Icon(Icons.error),
+                            );
+                          },
+                        )),
                   ),
                 ),
               ),
               Column(
                 children: [
-                  Text('ddd'),
+                  Row(crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                  CircleAvatar(
+                    radius: 5,
+                    backgroundColor: Colors.redAccent
+                  ),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      const Text(
+                 'Now Playing',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+
+                          fontWeight: FontWeight.w500,
+                      ),
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 22,
                   ),
-                  Text('THE BAD GAY'),
+                  Text(
+                    state.movies[0].title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   SizedBox(
                     height: 12,
                   )
@@ -47,10 +83,18 @@ class NowPlayingItem extends StatelessWidget {
               )
             ],
           );
+        }
+        else if (state is NowPlayingMovieError){
+          return CustomErrorWidget(message: state.errorMessage,
 
-        // else if(){
-        //
-        // }
+          );
+        }
+        else{
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
       },
     );
   }
