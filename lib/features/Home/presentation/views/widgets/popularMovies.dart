@@ -17,7 +17,10 @@ class PopularMovies extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) => const ListViewItem(
-        imageUrl: '${AssetData.test}', textName: 'fares', releaseDate: '2020', vote: 3, descreption: 'dgsjyyyyyyyyy',),
+     textName: 'fares', releaseDate: '2020', vote: 'dd', descreption: 'dgsjyyyyyyyyy',
+        imageUrl: ' ',
+        )
+        ,
         itemCount: 16,
       )
     );
