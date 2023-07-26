@@ -11,9 +11,9 @@ class TopRatedMovies extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TopRated Movies'),
+        title: const Text('TopRated Movies'),
     ),
-      body: TopRatedMoviesBody(),
+      body: const TopRatedMoviesBody(),
     );
   }
 }
