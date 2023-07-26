@@ -4,7 +4,9 @@ import 'package:cars/features/Home/presentation/manager/movie_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/utils/widget/CustomErrorWidget.dart';
+import '../../../data/repositories/home_repo_imple.dart';
 import 'ListViewImage.dart';
 
 class PopularItemsListView extends StatelessWidget {
@@ -12,7 +14,9 @@ class PopularItemsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieBloc, MovieState>(
+    return BlocProvider(
+  create: (context) =>  MovieBloc(getIt.get<HomeRepoImpl>())..add(LoadPopularMovies()),
+  child: BlocBuilder<MovieBloc, MovieState>(
       builder: (context, state) {
         if (state is PopularMovieSuccess) {
           return Column(
@@ -23,8 +27,9 @@ class PopularItemsListView extends StatelessWidget {
                   itemBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListViewItemImage(
-                        imageUrl: state.movies[index].backdropPath,
-                      )),
+                        imageUrl:state.movies[index].backdropPath
+                        )
+                  ),
                   itemCount: state.movies.length,
                   scrollDirection: Axis.horizontal,
                 ),
@@ -39,6 +44,7 @@ class PopularItemsListView extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
       },
-    );
+    ),
+);
   }
 }
