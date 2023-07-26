@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class SeeMore extends StatelessWidget {
-  const SeeMore({super.key, required this.text, required this.location});
+  const SeeMore({super.key, required this.text});
   final String text;
-  final String location;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +31,6 @@ class SeeMore extends StatelessWidget {
           )
         ],
       ),
-      onTap: () {
-        GoRouter.of(context).push(location);
-      },
     );
   }
 }
