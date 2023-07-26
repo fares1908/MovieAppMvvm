@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cars/core/utils/service_locator.dart';
 import 'package:cars/features/Home/data/models/movie.dart';
 import 'package:cars/features/Home/presentation/manager/movie_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/widget/CustomErrorWidget.dart';
+import '../../../data/repositories/home_repo_imple.dart';
 import 'ListViewImage.dart';
 
 class TopRatedItemsListView extends StatelessWidget {
@@ -12,7 +14,9 @@ class TopRatedItemsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieBloc, MovieState>(
+    return BlocProvider(
+  create: (context) => MovieBloc(getIt.get<HomeRepoImpl>())..add(LoadTopRatedMovies()),
+  child: BlocBuilder<MovieBloc, MovieState>(
       builder: (context, state) {
         if (state is TopRatedMovieSuccess) {
           return Column(
@@ -39,6 +43,7 @@ class TopRatedItemsListView extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
       },
-    );
+    ),
+);
   }
 }

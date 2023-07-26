@@ -20,15 +20,7 @@ abstract class AppRouter {
     GoRoute(
       path: AppRouter.kHomeView,
       builder: (context, state) =>
-          BlocProvider(
-            create: (context) {
-              return MovieBloc(getIt.get<HomeRepoImpl>())
-                ..
-                add(LoadNowPlayingMovies())..add(LoadPopularMovies())..add(
-                    LoadTopRatedMovies());
-            },
-            child: const HomeView(),
-          ),
+          const HomeView(),
     ),
     GoRoute(
       path: AppRouter.kTopRatedView,
