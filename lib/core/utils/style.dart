@@ -19,5 +19,6 @@ abstract class Styles {
   static const textStyle16 = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 16,
+      fontFamily: kGtSectraFine
   );
 }
